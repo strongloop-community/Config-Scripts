@@ -19,7 +19,7 @@ if [ $1 = "start" ]; then
 	echo "Starting Strongloop application ..."
 	systemctl start strong-pm
 	cd StrongLoop-IoT-Demo
-	node . &
+	node . & 2>$1 > /dev/null
 	sleep 10
 	cd ..
 	cd LSM9DS0
