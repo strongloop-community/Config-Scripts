@@ -2,7 +2,7 @@
 
 
 if [ $# -lt 1 ]; then
-   echo "Usage: start-demo.sh <start|stop>"
+   echo "Usage: start-demo.sh <start|stop|update>"
    exit
 fi
 if [ $1 = "start" ]; then
@@ -27,6 +27,15 @@ if [ $1 = "start" ]; then
 	cd ..
 	ip_addr=`ifconfig wlan0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'` 
 	echo "Connect to your application at http://$ip_addr:3000/"
+elif [ $1 = "update" ]; then
+    cd StrongLoop-IoT-Demo
+    git pull
+    npm install
+    cd ../LSM9DS0
+    git pull
+    make clean
+    make
+    cd ..
 else
 	echo "Killing sensor logger ..."
 	proc=`ps | grep sensors | grep -v grep | awk '{print $1}'`
