@@ -21,23 +21,23 @@ sleep 10
 
 echo "Setting up repositories ..."
 echo ""
-#echo "src all     http://iotdk.intel.com/repos/1.1/iotdk/all" >> /etc/opkg/base-feeds.conf
-# echo "src x86 http://iotdk.intel.com/repos/1.1/iotdk/x86" >> /etc/opkg/base-feeds.conf
-# echo "src i586    http://iotdk.intel.com/repos/1.1/iotdk/i586" >> /etc/opkg/base-feeds.conf
+echo "src all     http://iotdk.intel.com/repos/1.1/iotdk/all" >> /etc/opkg/base-feeds.conf
+echo "src x86 http://iotdk.intel.com/repos/1.1/iotdk/x86" >> /etc/opkg/base-feeds.conf
+echo "src i586    http://iotdk.intel.com/repos/1.1/iotdk/i586" >> /etc/opkg/base-feeds.conf
 echo ""
 echo "*********************************************"
 echo "Updating Repositories ..."
 echo ""
-# opkg update
-# opkg upgrade
+opkg update
+opkg upgrade
 echo ""
 echo "*********************************************"
 echo "Installing git ..."
-# opkg install git
+opkg install git
 echo ""
 echo "*********************************************"
 echo "Installing cmake ..."
-# opkg install cmake
+opkg install cmake
 
 # The version of node that comes with Edison is too old. The latest versions
 # won't build, so use the last version that WILL
@@ -47,14 +47,14 @@ echo ""
 echo "*********************************************"
 echo "Upgrading node ... (this will take a while!)"
 sleep 5
-# wget http://dragonflyiot.com/demoSoftware/node-v0.12.5.tar.gz
-# tar xzf node-v0.12.5.tar.gz
-# rm *.tar*
-# cd node-v0.12.5
-# ./configure
-# make install
-# cd ..
-# rm -rf node*
+wget http://dragonflyiot.com/demoSoftware/node-v0.12.5.tar.gz
+tar xzf node-v0.12.5.tar.gz
+rm *.tar*
+cd node-v0.12.5
+./configure
+make install
+cd ..
+rm -rf node*
 
 # the root partition will fill up if we don't move /usr/local
 # so move it to the /home partition
@@ -123,8 +123,7 @@ rm -rf libcouchbase
 
 # install mongodb for 32-bit linux
 # source is on my server since wget on Edison can't do https
-# the database is supposed to live in /data/db but again, we don't want to 
-# fill the / partition, so link it to the /home partition
+# the database is supposed to live in /data/db 
 echo ""
 echo "*********************************************"
 echo "Installing MongoDB ..."
@@ -133,13 +132,13 @@ tar xzf mongodb-linux-i686-3.2.0.tgz
 cp mongodb-linux-i686-3.2.0/bin/* /usr/local/bin
 rm -rf mongodb*
 rm ._mongodb-linux-i686-3.2.0
-# mkdir /home/data
-# mkdir /home/data/db
 mkdir /data
 mkdir /data/db
-#ln -s /home/data/db /data/db
 
 # update the library cache for all the stuff we just installed
+echo ""
+echo "*********************************************"
+echo "Updating Library Caches ..."
 echo "/usr/local/lib" >> /etc/ld.so.conf
 ldconfig
 
@@ -169,6 +168,14 @@ npm install -g strong-pm
 sl-pm-install --systemd
 systemctl start strong-pm
 
+# Install the Demo Application
+echo ""
+echo "*********************************************"
+echo "Installing the StrongLoop-IoT-Demo Application ..."
+git clone https://github.com/davidgs/StrongLoop-IoT-Demo
+cd StrongLoop-IoT-Demo
+npm install
+
 # Finally we grab the sensor reader code and build it.
 echo ""
 echo "*********************************************"
@@ -176,12 +183,19 @@ echo "Installing the Sensor Code ..."
 git clone https://github.com/davidgs/LSM9DS0
 cd LSM9DS0/
 make
+cd ..
+echo ""
+echo "*********************************************"
+echo "After Installation you should run the following commands to calibrate the sensors:"
+echo "    cd LSM9DS0"
+echo "    ./calibrate-mag"
+echo "    ./calibrate-acc-gyro"
+echo "Follow the on-screen instructions from those commands, and when calibrating the "
+echo "Accelerometer and Gyro, make sure the device is sitting flat on a stabel surface"
+echo "with no vibration from music, typing, computers, etc."
+
 
 #We're all done! 
 cd
 echo ""
 echo "*********************************************"
-echo "You will need to start the Mongo DB by running mongod --storageEngine=mmapv1"
-echo "the --storageEngine=mmapv1 is only required the FIRST time you start mongod"
-echo "Then start the sensor collector as LSM9DS0/sensors --output mongo --dbhost localhost"
-echo "If you plan to run the mongo db elsewhere, just change the argument of --dbhost"
