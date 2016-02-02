@@ -13,14 +13,14 @@ if [ $1 = "start" ]; then
 	echo "Clearing out the Mongo Datastore ..."
 	mongo mongo  --eval "db.dropDatabase()"
 	sleep 5
-	echo "Starting the sensor logger ... "
 	
-	sleep 3
 	echo "Starting Strongloop application ..."
 	systemctl start strong-pm
 	cd StrongLoop-IoT-Demo
 	node .  2>$1 > /dev/null &
-	sleep 10
+	sleep 15
+	echo "Starting the sensor logger ... "
+	sleep 3
 	cd ..
 	cd LSM9DS0
 	./sensors --output json --dbhost localhost &
