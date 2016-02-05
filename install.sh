@@ -11,7 +11,7 @@ echo ""
 echo "Updating the built-in webserver ... "
 cp edison-config-server.js /usr/lib/edison_config_tools
 cp resetSensors.sh /usr/lib/edison_config_tools
-chmod +x /usr/lib/edison_config_server/resetSensors.sh
+chmod +x /usr/lib/edison_config_tools/resetSensors.sh
 cp findmongo.sh /usr/lib/edison_config_tools
 chmod +x /usr/lib/edison_config_tools/findmongo.sh
 kill `ps | grep edison-config-server | grep node | awk '{print $1}'`
