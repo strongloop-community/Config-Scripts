@@ -14,5 +14,9 @@ cp resetSensors.sh /usr/lib/edison_config_tools
 chmod +x /usr/lib/edison_config_tools/resetSensors.sh
 cp findmongo.sh /usr/lib/edison_config_tools
 chmod +x /usr/lib/edison_config_tools/findmongo.sh
+cd /usr/lib/edison_config_tools
+npm install shelljs
 kill `ps | grep edison-config-server | grep node | awk '{print $1}'`
+node /usr/lib/edison_config_tools/edison-config-server.js &
+systemctl enable edison_config.service
 echo "All done!"
