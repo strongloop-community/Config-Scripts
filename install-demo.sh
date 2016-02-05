@@ -186,6 +186,23 @@ make
 cd ..
 echo ""
 echo "*********************************************"
+echo "Doing some administrative things ..."
+git clone https://github.com/davidgs/Config-Scripts
+cd Config-Scripts
+mkdir /etc/init.d
+cp demo.sh /etc/init.d
+chmod +x /etc/init.d/demo.sh
+update-rc.d demo.sh defaults
+cp demo-ctrl.sh ..
+cp edison-config-server.js /usr/lib/edison_config_tools
+cp resetSensors.sh /usr/lib/edison_config_tools
+chmod +x /usr/lib/edison_config_server/resetSensors.sh
+cp findmongo.sh /usr/lib/edison_config_tools
+chmod +x /usr/lib/edison_config_tools/findmongo.sh
+kill `ps | grep edison-config-server | grep node | awk '{print $1}'`
+cd ..
+echo ""
+echo "*********************************************"
 echo "After Installation you should run the following commands to calibrate the sensors:"
 echo "    cd LSM9DS0"
 echo "    ./calibrate-mag"
@@ -193,9 +210,12 @@ echo "    ./calibrate-acc-gyro"
 echo "Follow the on-screen instructions from those commands, and when calibrating the "
 echo "Accelerometer and Gyro, make sure the device is sitting flat on a stabel surface"
 echo "with no vibration from music, typing, computers, etc."
+echo "Whenever the Edison reboots the MongoDB will automatically start, as will the "
+echo "StrongLoop Application. Use the demo-crtl.sh script to stop or restart the demo."
 
 
-#We're all done! 
+# We're all done! 
 cd
 echo ""
 echo "*********************************************"
+ 
