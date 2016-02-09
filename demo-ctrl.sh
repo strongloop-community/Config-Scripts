@@ -144,17 +144,12 @@ if [ $1 = "install" ]; then
     echo "/usr/local/lib" >> /etc/ld.so.conf
     ldconfig
 
-    # install loopback
     # npm installs will fail without some directory permission fixes
     # so we make sure those are done first
     cd
-    echo ""
-    echo "*********************************************"
-    echo "Installing loopback ..."
     mkdir .npm
     chmod -R a+rw .npm
     chmod a+w .
-    npm install -g loopback
 
     # this may not be strictly necessary, but ...
     echo ""
