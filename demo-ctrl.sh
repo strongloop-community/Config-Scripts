@@ -177,7 +177,7 @@ if [ $1 = "install" ]; then
     git clone https://github.com/davidgs/StrongLoop-IoT-Demo
     cd StrongLoop-IoT-Demo
     npm install
-
+    cd ..
     # Finally we grab the sensor reader code and build it.
     echo ""
     echo "*********************************************"
