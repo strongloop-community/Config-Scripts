@@ -46,9 +46,14 @@ Options:
 * Kills the LoopBack Application.   
 * Kills the sensor reader process.   
 
-#####Update:  
+####Update:  
 * Executes a git pull on all the repositories.  
 * Recompiles the sensor-reader.  
 * npm installs the LoopBack application.  
+
+####Clear
+* Kills mongod
+* Clears out the mongo datastore
+* Restarts mongod
 
 

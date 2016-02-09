@@ -19,13 +19,14 @@ if [ $1 = "install" ]; then
     echo "*********************************************"
     sleep 10
 
-    echo "Setting up repositories ..."
-    echo ""
-    echo "src all     http://iotdk.intel.com/repos/1.1/iotdk/all" >> /etc/opkg/base-feeds.conf
-    echo "src x86 http://iotdk.intel.com/repos/1.1/iotdk/x86" >> /etc/opkg/base-feeds.conf
-    echo "src i586    http://iotdk.intel.com/repos/1.1/iotdk/i586" >> /etc/opkg/base-feeds.conf
-    echo ""
-    echo "*********************************************"
+    # This has to be done manually -- covered in the ReadMe
+    # echo "Setting up repositories ..."
+    # echo ""
+    # echo "src all     http://iotdk.intel.com/repos/1.1/iotdk/all" >> /etc/opkg/base-feeds.conf
+    # echo "src x86 http://iotdk.intel.com/repos/1.1/iotdk/x86" >> /etc/opkg/base-feeds.conf
+    # echo "src i586    http://iotdk.intel.com/repos/1.1/iotdk/i586" >> /etc/opkg/base-feeds.conf
+    # echo ""
+    # echo "*********************************************"
     echo "Updating Repositories ..."
     echo ""
     opkg update
